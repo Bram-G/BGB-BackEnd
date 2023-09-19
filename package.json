@@ -1,0 +1,33 @@
+{
+  "name": "bgb-backend",
+  "version": "1.0.0",
+  "description": "Backend Database for BGB",
+  "main": "index.js",
+  "scripts": {
+    "seed": "node utils/seed",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bram-G/BGB-BackEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bram-G/BGB-BackEnd/issues"
+  },
+  "homepage": "https://github.com/Bram-G/BGB-BackEnd#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "domparser": "^0.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^5.2.0",
+    "mongoose": "^7.0.3",
+    "node.js": "^0.0.1-security",
+    "openai": "^4.6.0"
+  }
+}
