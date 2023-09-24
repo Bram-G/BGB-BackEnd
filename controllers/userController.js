@@ -31,16 +31,15 @@ module.exports = {
     User.findOne({ username: req.body.username })
       .then((foundUser) => {
         if (!foundUser) {
-          return res
-            .status(401)
-            .json({ msg: "Invalid credentials were input." });
+          return res.status(401).json({ msg: "wrong username" });
         }
 
         if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
-          return res
-            .status(401)
-            .json({ msg: "Invalid credentials were input." });
+          return res.status(401).json({ msg: "wrong password" });
         }
+        // if(req.body.password !== foundUser.password){
+        //   return res.status(401).json({ msg: "wrong password" });
+        // }
 
         const token = jwt.sign(
           {
@@ -52,7 +51,7 @@ module.exports = {
             expiresIn: "6h",
           }
         );
-        console.log(token);
+        // console.log(token);
         return res.json({
           msg: "successfully logged in",
           token: token,
@@ -143,6 +142,51 @@ module.exports = {
         res.json({ msg: `successfully deleted user ${dbUserData.username}` })
       )
       .catch((err) => res.status(500).json(err));
+  },
+
+  addGamesToCollection(req, res) {
+    const gameIds = req.body.gameIds; // Assuming you pass an array of game IDs in the request body
+    const userId = req.params.userId;
+
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+
+        if (!Array.isArray(gameIds)) {
+          console.log(gameIds);
+          return res
+            .status(400)
+            .json({ message: "Invalid input. Expecting an array of gameIds." });
+        }
+
+        // Create a Set to store unique game IDs
+        const uniqueGameIds = new Set(gameIds);
+
+        // Filter out game IDs that are already in the user's collection
+        const newGameIds = [...uniqueGameIds].filter(
+          (gameId) => !user.bg_collection.includes(gameId)
+        );
+
+        // Add the new game IDs to the user's collection
+        user.bg_collection.push(...newGameIds);
+
+        // Save the updated user object
+        return user
+          .save()
+          .then((updatedUser) => {
+            res.json(updatedUser);
+          })
+          .catch((err) => {
+            console.error("Error saving user:", err);
+            res.status(500).json(err);
+          });
+      })
+      .catch((err) => {
+        console.error("Error finding user:", err);
+        res.status(500).json(err);
+      });
   },
 
   addGameToCollection(req, res) {

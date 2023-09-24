@@ -8,6 +8,7 @@ const {
   logUserIn,
   isValidToken,
   addGameToCollection,
+  addGamesToCollection,
   removeGameFromCollection,
 
 } = require('../../controllers/userController');
@@ -17,6 +18,8 @@ router.route('/').get(getUsers).post(createUser);
 router.route('/login').post(logUserIn)
 
 router.route('/isValidToken').get(isValidToken)
+
+router.route('/getUser/bggcollection/:userId').post(addGamesToCollection)
 
 router.route('/getUser/:username').get(getSingleUser).put(updateUser).delete(deleteUser);
 
