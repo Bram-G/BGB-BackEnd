@@ -9,11 +9,16 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-const corsOptions = {
-  origin: ['https://boardgamebutler.netlify.app/','https://main--boardgamebutler.netlify.app/login'],// Replace with your frontend's URL
+// const corsOptions = {
+//   origin: ['https://boardgamebutler.netlify.app','https://main--boardgamebutler.netlify.app'],// Replace with your frontend's URL
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true, // Allow cookies and credentials to be sent
+// };
+app.use(cors({
+  origin: 'https://boardgamebutler.netlify.app', // Replace with your frontend's URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Allow cookies and credentials to be sent
-};
+  credentials: true, // You might need this if you're dealing with cookies or sessions
+}));
 
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
