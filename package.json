@@ -4,8 +4,10 @@
   "description": "Backend Database for BGB",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "seed": "node utils/seed",
     "test": "echo \"Error: no test specified\" && exit 1"
+    
   },
   "repository": {
     "type": "git",
