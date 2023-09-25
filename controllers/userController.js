@@ -16,7 +16,11 @@ const corsOptions = {
 };
 
 // Add the CORS middleware for all routes in this controller
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'https://boardgamebutler.netlify.app', // Replace with your frontend's URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // You might need this if you're dealing with cookies or sessions
+}));
 
 module.exports = {
   // get all users
