@@ -91,10 +91,10 @@ module.exports = {
 
   // get single user
   getSingleUser(req, res) {
-    User.findOne({ username: req.params.username })
+    User.findOne({ _id: req.params.userId })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: "No user with that username" })
+          ? res.status(404).json({ message: "No user with that id" })
           : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
@@ -130,9 +130,23 @@ module.exports = {
 
   // update user
   updateUser(req, res) {
-    User.findOneAndUpdate({ username: req.params.username }, req.body, {
-      new: true,
-    }).then((user) => res.json(user));
+    const { username, email } = req.body;
+  
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: { username, email } }, // Use $set to update specific fields
+      { new: true }
+    )
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        return res.json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error" });
+      });
   },
 
   // delete user
