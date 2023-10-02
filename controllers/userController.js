@@ -16,10 +16,17 @@ const corsOptions = {
 };
 
 // Add the CORS middleware for all routes in this controller
+const allowedOrigins = [
+  'https://boardgamebutler.netlify.app',
+  'http://localhost:3000/',
+]
+
 app.use(cors({
-  origin: 'https://boardgamebutler.netlify.app', // Replace with your frontend's URL
+  // origin: allowedOrigins,
+  // origin: 'http://localhost:3000',
+  origin: 'https://boardgamebutler.netlify.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // You might need this if you're dealing with cookies or sessions
+  credentials: true, 
 }));
 
 module.exports = {

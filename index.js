@@ -14,10 +14,17 @@ const app = express();
 //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 //   credentials: true, // Allow cookies and credentials to be sent
 // };
+const allowedOrigins = [
+  'https://boardgamebutler.netlify.app',
+  'http://localhost:3000/',
+]
+
 app.use(cors({
-  origin: 'https://boardgamebutler.netlify.app', // Replace with your frontend's URL
+  // origin: allowedOrigins,
+  // origin: 'http://localhost:3000',
+  origin: 'https://boardgamebutler.netlify.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // You might need this if you're dealing with cookies or sessions
+  credentials: true, 
 }));
 
 // app.use(express.urlencoded({ extended: true }));
